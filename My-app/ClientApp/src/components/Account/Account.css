@@ -1,130 +1,137 @@
 .create-employee-container {
-    width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .employee-form .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .employee-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-  }
-  
-  .employee-form input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  .submit-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submit-button:hover {
-    background-color: #218838;
-  }
-  
-  .message {
-    margin-top: 20px;
-    text-align: center;
-    color: #d9534f;
-    font-weight: bold;
-  }
-  .employee-list-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.employee-form .form-group {
+  margin-bottom: 15px;
+}
+
+.employee-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.employee-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+.message {
+  margin-top: 20px;
+  text-align: center;
+  color: #d9534f;
+  font-weight: bold;
+}
+
+.employee-list-container {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .employee-list-title {
-    font-size: 24px;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .error-message {
-    color: red;
-    font-weight: bold;
-    text-align: center;
+  color: red;
+  font-weight: bold;
+  text-align: center;
 }
 
 .employee-list {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .employee-item {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .employee-item span {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .employee-id {
-    font-weight: bold;
-    color: #007bff;
+  font-weight: bold;
+  color: #007bff;
 }
 
 .employee-name {
-    font-size: 18px;
-    font-weight: bold;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.employee-job, .employee-phone, .employee-email {
-    font-size: 14px;
-    color: #555;
+.employee-job,
+.employee-phone,
+.employee-email {
+  font-size: 14px;
+  color: #555;
 }
-.modal-dialog{
+
+.modal-dialog {
   max-width: 900px !important;
-  
+
 }
-.modal-header{
+
+.modal-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .close-button {
-  background-color: #f0f0f0;
+  background-color: #ff4e4e;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 50%;
   font-size: 0.9rem;
+
   font-weight: normal;
-  color: #ff0000;
+  color: whitesmoke;
   cursor: pointer;
   padding: 4px 8px;
   position: absolute;
@@ -134,8 +141,8 @@
 }
 
 .close-button:hover {
-  background-color: #e0e0e0;
-  border-color: #bbb;
+  background-color: #ff0000;
+  border-color: #ff0000;
 }
 
 .close-button:focus {
@@ -143,6 +150,7 @@
   border-color: #aaa;
   outline: none;
 }
+
 /* Styles for Delete Button */
 .delete-button {
   background-color: #ff4d4d;
@@ -175,4 +183,47 @@
 .update-button:hover {
   background-color: #45a049;
   border-color: #397d3f;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.employee-table th,
+.employee-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.employee-table th {
+  background-color: #f2f2f2;
+}
+
+.delete-button,
+.update-button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.delete-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+}
+
+.update-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+}
+
+.clos-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
 }

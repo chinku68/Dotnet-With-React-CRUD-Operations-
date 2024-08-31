@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Account.css';
 
 
@@ -17,8 +17,9 @@ const CreateEmployee = () => {
     formData.append('Email', email);
     formData.append('Phone', phone);
     formData.append('JobTitle', jobTitle);
-    
-    fetch('/api/account/create', {
+
+
+    fetch('https://localhost:44420/api/account/create', {
       method: 'POST',
       body: formData
     })
@@ -26,17 +27,19 @@ const CreateEmployee = () => {
       .then(data => {
         setMessage(data);
         alert(data);
+
       })
       .catch(error => {
         console.error('Error:', error);
         setMessage('Failed to create employee.');
       });
-     
+
   };
+
 
   return (
     <div className="create-employee-container">
-      <h1>Create Employee</h1>
+      <h1 className='employee-list-title'>Create Employee</h1>
       <form onSubmit={handleSubmit} className="employee-form">
         <div className="form-group">
           <label>Name:</label>
