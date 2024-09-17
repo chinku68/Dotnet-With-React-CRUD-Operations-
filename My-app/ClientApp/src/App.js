@@ -10,11 +10,17 @@ import Login from './components/Account/LogIn';
 import PostProduct from './components/Products/PostProduct';
 import CartItems from './components/Products/Cart';
 import UserProfile from './components/Account/UserProfile';
+import { AddToFav } from './components/Products/GetProducts';
+import FavouriteList from './components/Products/Favlist';
 
 const App = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
+    // const [cartItem, setCartItem] = useState([]);
 
+    // const handleCartItemsChange = (items) => {
+    //     setCartItem(items);
+    // };
     const storedUserDetails = sessionStorage.getItem("UserDetails");
     if (storedUserDetails) {
       const userDetails = JSON.parse(storedUserDetails);
@@ -40,19 +46,24 @@ const App = () => {
   console.log("User state: ", User);
   return (
     <div>
-      <Routes>
+
+    <Routes>
         <Route path="/EmployeeList" element={<EmployeeList />}></Route>
         <Route path="/" element={<Home User={User} />}></Route>
         < Route path="/signup" element={<SignUp />} />
         <Route path='/login' element={<Login />} />
         <Route path='/CreateEmployee' element={<CreateEmployee />} />
         <Route path='/Cart' element={<CartItems />} />
+        {/* onCartItems={handleCartItemsChange}  */}
         <Route path='/UserProfile' element={<UserProfile User={User} />} />
         <Route path='/PostProduct' element={<PostProduct User={User} />} />
+        <Route path='/FavList' element={<FavouriteList/>} />
       </Routes>
-      <><button onClick={handleLogout}>Logout</button>
-        <button onClick={handlePPost}>Post</button>
+      <>
+      <div>{user ?<button onClick={handleLogout}>Logout</button>: <></>}</div>
 
+        {user &&user.type=="Admin"?<button onClick={handlePPost}>Post</button>:<></>}
+          
       </>
     </div>
   )

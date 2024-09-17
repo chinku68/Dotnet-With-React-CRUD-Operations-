@@ -230,6 +230,88 @@ namespace My_app.Controllers
                 return BadRequest(new { message = "Error adding item to cart." });
             }
         }
+
+        [HttpPost("fav")]
+        public IActionResult AddToFav([FromBody] FavouriteReq fav)
+        {
+            int result = _account.AddToFav(fav);
+
+            if (result == 1)
+            {
+                return Ok(new { message = "Item added to favorites successfully." });
+            }
+            else if (result == 0)
+            {
+                return Ok(new { message = "Item removed from favorites successfully." });
+            }
+            else
+            {
+                return BadRequest(new { message = "Error adding/removing item to/from favorites." });
+            }
+        }
+
+        [Route("addfav")]
+        [HttpPost]
+public IActionResult ActFav(IFormCollection frmcl)
+{
+    try
+    {
+        int userId = Convert.ToInt32(frmcl["UserID"]);
+        int productId = Convert.ToInt32(frmcl["ProductId"]);
+
+        string res = _account.AddToFavo(userId, productId);
+
+        if (res == "1")
+        {
+            return Ok(new { message = "Item added to favorites successfully." });
+        }
+        else if (res == "0")
+        {
+            return Ok(new { message = "Item removed from favorites successfully." });
+        }
+        else
+        {
+            return BadRequest(new { message = "Error adding/removing item to/from favorites." });
+        }
+    }
+    catch (Exception ex)
+    {
+        return BadRequest(new { message = $"An error occurred: {ex.Message}" });
+    }
+}
+
+[HttpGet("favourites/{userId}")]
+public IActionResult GetFavourites(int userId)
+{
+    var favourites = _account.GetFavourites(userId);
+    
+    if (favourites != null && favourites.Count > 0)
+    {
+        return Ok(favourites);
+    }
+    else
+    {
+        return NotFound(new { message = "No favourites found for this user." });
+    }
+}
+[Route("getfavorites")]
+[HttpGet]
+public IActionResult GetFavorites(int userId)
+{
+    try
+    {
+        // Assuming you have a method to get the user's favorite product IDs from the database
+        List<int> favoriteProductIds = _account.GetFavoriteProductIds(userId);
+
+        return Ok(new { favorites = favoriteProductIds });
+    }
+    catch (Exception ex)
+    {
+        return BadRequest(new { message = $"An error occurred: {ex.Message}" });
+    }
+}
+
+
         // [Route("login")]
         // [HttpPost]
         //     public IActionResult Login(IFormCollection frmcl)

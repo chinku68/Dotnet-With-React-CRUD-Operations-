@@ -27,7 +27,7 @@ const Header = ({ User }) => {
                         <Link to="#home">HOME</Link>
                         <Link to="#about">ABOUT US</Link>
                         <Link to="/cart">🛒  CART</Link>
-                        <Link to="#service">OUR SERVICE</Link>
+                        <Link to="/favlist">Favourites</Link>
 
                         <>
                             

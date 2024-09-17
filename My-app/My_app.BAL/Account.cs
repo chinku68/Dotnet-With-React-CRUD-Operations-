@@ -449,7 +449,65 @@ namespace My_app.BAL
                 return false;
             }
         }
+        public int AddToFav(FavouriteReq fav)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connection))
+                {
+                    using (SqlCommand cmd = new SqlCommand("InsertFavourite", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
 
+                        cmd.Parameters.AddWithValue("@UserId", fav.UserId);
+                        cmd.Parameters.AddWithValue("@ProductId", fav.ProductId);
+
+                        // Output parameter to capture the return value from the stored procedure
+                        SqlParameter returnValue = new SqlParameter();
+                        returnValue.Direction = ParameterDirection.ReturnValue;
+                        cmd.Parameters.Add(returnValue);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+
+                        // Return the stored procedure return value (0 or 1)
+                        int result = (int)returnValue.Value;
+                        return result;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log exception here
+                return -1; // Return -1 for any exception encountered
+            }
+        }
+
+        //    public bool RemoveFromFav(FavouriteReq fav)
+        //     {
+        //         try
+        //         {
+        //             using (SqlConnection conn = new SqlConnection(_connection))
+        //             {
+        //                 using (SqlCommand cmd = new SqlCommand("Unfavourite", conn))
+        //                 {
+        //                     cmd.CommandType = CommandType.StoredProcedure;
+
+        //                     cmd.Parameters.AddWithValue("@UserId", fav.UserId);
+        //                     cmd.Parameters.AddWithValue("@ProductId", fav.ProductId);
+        //                     conn.Open();
+        //                     cmd.ExecuteNonQuery();
+        //                 }
+        //             }
+        //             return true;
+
+        //         }
+        //         catch (Exception ex)
+        //         {
+        //             // Log exception here
+        //             return false;
+        //         }
+        //     }
         public List<Cart> GetCartedItemsByUserId(int userId)
         {
             List<Cart> cartItemList = new List<Cart>();
@@ -494,30 +552,146 @@ namespace My_app.BAL
             return cartItemList;
         }
 
-public bool RemoveFromCart(int cartId)
+        public bool RemoveFromCart(int cartId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connection))
+                {
+                    using (SqlCommand cmd = new SqlCommand("RemoveFromCart", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@CartID", cartId);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception here if necessary
+                return false;
+            }
+        }
+
+public string AddToFavo(int userId, int productId)
 {
+    string result = "";
+
     try
     {
         using (SqlConnection conn = new SqlConnection(_connection))
         {
-            using (SqlCommand cmd = new SqlCommand("RemoveFromCart", conn))
+            using (SqlCommand cmd = new SqlCommand("InsertFavourite", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@ProductId", productId);
 
-                cmd.Parameters.AddWithValue("@CartID", cartId);
+                // Define a parameter to hold the return value
+                SqlParameter returnValue = new SqlParameter();
+                returnValue.Direction = ParameterDirection.ReturnValue;
+                cmd.Parameters.Add(returnValue);
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
+
+                // Capture the return value (expected to be 0 or 1)
+                int res = (int)returnValue.Value;
+                
+                // Convert the result to string to match your method's return type
+                result = res.ToString();
             }
         }
-        return true;
     }
     catch (Exception ex)
     {
-        // Log the exception here if necessary
-        return false;
+        result = "Error: " + ex.Message;
     }
+
+    return result;
 }
+
+public List<FavouriteReq> GetFavourites(int userId)
+{
+    List<FavouriteReq> favouritesList = new List<FavouriteReq>();
+
+    try
+    {
+        using (SqlConnection conn = new SqlConnection(_connection))
+        {
+            using (SqlCommand cmd = new SqlCommand("GetAllFavourites", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserId", userId);
+
+                conn.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        FavouriteReq fav = new FavouriteReq
+                        {
+                            ID = (int)reader["ID"],
+                            UserId = (int)reader["UserId"],
+                            ProductId = (int)reader["ProductId"],
+                            UnitPrice = (decimal)reader["UnitPrice"],
+                            Discount = (decimal)reader["Discount"],
+                            Quantity = (int)reader["Quantity"],
+                            TotalPrice = (decimal)reader["TotalPrice"],
+                            Name = reader["Name"].ToString(),
+                            ManufaturedBy = reader["ManufaturedBy"].ToString(),
+                            ImageUrl = reader["ImageUrl"].ToString()
+                        };
+                        favouritesList.Add(fav);
+                    }
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        // Log the exception and handle it appropriately
+        Console.WriteLine("Error fetching favourites: " + ex.Message);
+    }
+
+    return favouritesList;
+}
+public List<int> GetFavoriteProductIds(int userId)
+{
+    List<int> favoriteProductIds = new List<int>();
+
+    try
+    {
+        using (SqlConnection conn = new SqlConnection(_connection))
+        {
+            using (SqlCommand cmd = new SqlCommand("SELECT ProductId FROM Favourite WHERE UserId = @UserId", conn))
+            {
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        favoriteProductIds.Add(reader.GetInt32(0)); // Assuming ProductId is the first column
+                    }
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        // Log the error or handle as necessary
+        Console.WriteLine("Error fetching favorite product IDs: " + ex.Message);
+    }
+
+    return favoriteProductIds;
+}
+
 
         // public Users AuthenticateUser(string emailOrPhone, string password)
         // {
